@@ -23,7 +23,7 @@ const HeroSection: React.FC<SectionProps> = ({ id }) => {
   return (
     <section 
       id={id} 
-      className="min-h-screen sm:min-h-[90vh] bg-cover bg-center bg-no-repeat relative flex items-center justify-center pt-[50px] md:pt-[70px]"
+      className="min-h-screen sm:min-h-screen bg-cover bg-center bg-no-repeat relative flex items-center justify-center pt-[50px] md:pt-[70px]"
       style={{ 
         backgroundImage: `url('${heroImageUrl}')`,
         backgroundAttachment: 'fixed' 
