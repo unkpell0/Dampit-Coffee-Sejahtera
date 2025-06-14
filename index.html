@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id" style="scroll-behavior: smooth;">
 <head>
@@ -71,15 +72,15 @@
         -moz-osx-font-smoothing: grayscale;
       }
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px; /* Reduced from 8px */
+        height: 6px; /* Reduced from 8px */
       }
       ::-webkit-scrollbar-track {
         background: #fdf8f4; /* Lighter coffee milk color */
       }
       ::-webkit-scrollbar-thumb {
         background: #A0522D; /* Sienna - a muted coffee accent */
-        border-radius: 4px;
+        border-radius: 3px; /* Reduced from 4px */
       }
       ::-webkit-scrollbar-thumb:hover {
         background: #8B4513; /* coffee-medium */
@@ -89,29 +90,33 @@
       .scroll-animate {
         opacity: 0;
         transform: translateY(30px);
-        transition: opacity 0.5s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
-        transition-delay: 0.1s; /* Default delay */
+        transition-property: opacity, transform;
+        transition-duration: 0.5s;
+        transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+        /* No default transition-delay, handled by child-delay-XXX if needed */
       }
-      .scroll-animate.is-visible {
+      
+      /* When the parent section has .section-in-view, animate its .scroll-animate children */
+      .section-in-view .scroll-animate {
         opacity: 1;
         transform: translateY(0);
       }
       
-      /* Staggered animation delays (optional utility classes) */
-      .delay-100.is-visible { transition-delay: 0.1s; }
-      .delay-200.is-visible { transition-delay: 0.2s; }
-      .delay-300.is-visible { transition-delay: 0.3s; }
-      .delay-400.is-visible { transition-delay: 0.4s; }
-      .delay-500.is-visible { transition-delay: 0.5s; }
+      /* Staggered animation delays for children within a visible section */
+      .section-in-view .scroll-animate.child-delay-0 { transition-delay: 0s; }
+      .section-in-view .scroll-animate.child-delay-100 { transition-delay: 0.1s; }
+      .section-in-view .scroll-animate.child-delay-200 { transition-delay: 0.2s; }
+      .section-in-view .scroll-animate.child-delay-300 { transition-delay: 0.3s; }
+      .section-in-view .scroll-animate.child-delay-400 { transition-delay: 0.4s; }
+      .section-in-view .scroll-animate.child-delay-500 { transition-delay: 0.5s; }
 
-      /* Hero specific animation classes */
+      /* Hero specific animation classes (remain unchanged by this scroll refactor) */
       .animate-hero-card-enter { animation: heroCardEnter 0.6s ease-out 0.05s forwards; }
       .animate-hero-main-title { animation: heroFadeInUp 0.6s ease-out 0.25s forwards; }
       .animate-hero-hook-phrase { animation: heroFadeInUp 0.6s ease-out 0.40s forwards; }
       .animate-hero-top-phrase { animation: heroFadeInUp 0.6s ease-out 0.55s forwards; } /* New intro phrase */
       .animate-hero-main-hook { animation: heroFadeInUp 0.6s ease-out 0.65s forwards; }
       .animate-hero-flavor-text { animation: heroFadeInUp 0.6s ease-out 0.75s forwards; } 
-      .animate-hero-location-subtitle { animation: heroFadeInUp 0.6s ease-out 0.90s forwards; } 
       .animate-hero-tagline { animation: heroFadeInUp 0.6s ease-out 1.05s forwards; } 
       .animate-hero-cta-button { animation: heroFadeInUp 0.6s ease-out 1.20s forwards; } 
       .animate-hero-trust-badges { animation: heroFadeInUp 0.6s ease-out 1.35s forwards; }
@@ -126,7 +131,6 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
 <body class="bg-[#FEFEFE] text-coffee-dark font-inter">
     <div id="root"></div>

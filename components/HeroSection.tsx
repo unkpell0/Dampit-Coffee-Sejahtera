@@ -6,8 +6,8 @@ import { SectionProps } from '../types';
 const WhatsAppIcon: React.FC<{className?: string}> = ({className}) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
+    width="20" /* Base width, overridden by className */
+    height="20" /* Base height, overridden by className */
     viewBox="0 0 24 24" 
     fill="currentColor"
     className={className}
@@ -23,7 +23,7 @@ const HeroSection: React.FC<SectionProps> = ({ id }) => {
   return (
     <section 
       id={id} 
-      className="min-h-[80vh] sm:min-h-screen bg-cover bg-center bg-no-repeat relative flex items-center justify-center pt-[60px] md:pt-[80px]" 
+      className="min-h-screen sm:min-h-[90vh] bg-cover bg-center bg-no-repeat relative flex items-center justify-center pt-[50px] md:pt-[70px]"
       style={{ 
         backgroundImage: `url('${heroImageUrl}')`,
         backgroundAttachment: 'fixed' 
@@ -40,39 +40,34 @@ const HeroSection: React.FC<SectionProps> = ({ id }) => {
       ></div>
       
       {/* Content Container: centers the card. */}
-      <div className="relative z-10 w-full flex flex-col items-center px-4">
+      <div className="relative z-10 w-full flex flex-col items-center px-3">
         
         {/* Glassmorphism Card: refined for elegance */}
         <div 
-            className="w-11/12 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl 
+            className="w-11/12 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl
                         bg-black/25 backdrop-blur-2xl
                         border border-white/15
-                        rounded-3xl 
-                        px-5 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10
-                        shadow-2xl text-center
+                        rounded-2xl
+                        px-4 py-4 sm:px-5 sm:py-6 md:px-6 md:py-8 
+                        shadow-xl text-center 
                         animate-hero-card-enter 
-                        hover:border-white/20 hover:-translate-y-1.5 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.35)]
+                        hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] 
                         transition-all duration-300 ease-out 
                         "
         >
           <h1 
             id="hero-main-headline"
-            className="text-4xl leading-tight sm:text-5xl lg:text-6xl font-poppins font-extrabold text-white mb-4 animate-hero-main-title"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-poppins font-extrabold text-white leading-snug mb-2 sm:mb-3 animate-hero-main-title"
           >
             Kopi Premium Dampit
           </h1>
           <p
-            className="text-lg sm:text-xl lg:text-2xl font-poppins font-semibold text-white mb-4 animate-hero-main-hook"
+            className="text-sm sm:text-base md:text-lg lg:text-xl font-poppins font-semibold text-white mb-2 sm:mb-3 animate-hero-main-hook"
           >
             Pilihan Utama untuk <span className="text-coffee-highlight">Ekspor Kopi Istimewa.</span>
           </p>
           <p 
-            className="text-lg sm:text-xl font-inter font-light text-white/90 mb-4 animate-hero-location-subtitle"
-          >
-            Langsung dari Lereng Gunung Semeru
-          </p>
-          <p 
-            className="text-sm sm:text-base font-inter text-white/80 mb-8 animate-hero-tagline"
+            className="text-[11px] sm:text-xs font-inter text-white/80 mb-5 sm:mb-6 animate-hero-tagline"
           >
             Dipercaya 15+ negara • Kualitas ekspor terjamin
           </p>
@@ -80,24 +75,24 @@ const HeroSection: React.FC<SectionProps> = ({ id }) => {
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center mx-auto space-x-3 bg-gradient-to-br from-brand-whatsapp to-green-600 text-white font-poppins font-semibold px-7 py-3 sm:px-8 sm:py-3.5 rounded-2xl text-base sm:text-lg hover:scale-105 shadow-[0_10px_25px_rgba(37,211,102,0.35)] hover:shadow-[0_14px_35px_rgba(37,211,102,0.45)] transition-all duration-300 animate-hero-cta-button"
+            className="flex items-center justify-center mx-auto space-x-2 sm:space-x-2.5 bg-gradient-to-br from-brand-whatsapp to-green-600 text-white font-poppins font-semibold px-5 py-2 sm:px-6 sm:py-2.5 rounded-xl text-xs sm:text-sm hover:scale-105 shadow-[0_8px_20px_rgba(37,211,102,0.3)] hover:shadow-[0_12px_30px_rgba(37,211,102,0.4)] transition-all duration-300 animate-hero-cta-button"
           >
-            <WhatsAppIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+            <WhatsAppIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> 
             <span>Konsultasi Sekarang</span>
           </a>
 
           {/* Trust Signals: refined and spaced out */}
           <div 
-            className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 mt-10 text-white/80 animate-hero-trust-badges"
+            className="flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-5 gap-y-2 sm:gap-y-2.5 mt-6 sm:mt-8 text-white/80 animate-hero-trust-badges"
           >
-            <span className="flex items-center text-xs sm:text-sm" title="Sertifikat Organik">
-              <span role="img" aria-label="Sertifikat Organik" className="mr-1.5 text-lg text-brand-gold">🏆</span> Sertifikasi Organik
+            <span className="flex items-center text-[10px] sm:text-[11px]" title="Sertifikat Organik"> 
+              <span role="img" aria-label="Sertifikat Organik" className="mr-1 text-sm sm:text-base text-brand-gold">🏆</span> Sertifikasi Organik
             </span>
-            <span className="flex items-center text-xs sm:text-sm" title="Ekspor ke 15+ Negara">
-              <span role="img" aria-label="Ekspor Global" className="mr-1.5 text-lg text-sky-300">🌍</span> 15+ Negara
+            <span className="flex items-center text-[10px] sm:text-[11px]" title="Ekspor ke 15+ Negara"> 
+              <span role="img" aria-label="Ekspor Global" className="mr-1 text-sm sm:text-base text-sky-300">🌍</span> 15+ Negara
             </span>
-            <span className="flex items-center text-xs sm:text-sm" title="Kualitas Premium Terjamin">
-              <span role="img" aria-label="Kualitas Premium" className="mr-1.5 text-lg text-amber-300">⭐</span> Kualitas Premium
+            <span className="flex items-center text-[10px] sm:text-[11px]" title="Kualitas Premium Terjamin"> 
+              <span role="img" aria-label="Kualitas Premium" className="mr-1 text-sm sm:text-base text-amber-300">⭐</span> Kualitas Premium
             </span>
           </div>
         </div>

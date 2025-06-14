@@ -1,40 +1,35 @@
-
 import React, { useRef } from 'react';
 import SectionTitle from './SectionTitle';
 import { SectionProps, Testimonial, Partner } from '../types';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial, index: number }> = ({ testimonial, index }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isVisible = useIntersectionObserver(ref, { threshold: 0.2 });
-  const delayClass = `delay-${(index % 3) * 100 + 100}`;
+  // Removed useRef, useIntersectionObserver, isVisible
+  const delayClass = `child-delay-${(index % 3) * 100 + 100}`; // Renamed to child-delay-
 
   return (
     <div 
-      ref={ref}
-      className={`bg-white p-8 rounded-xl shadow-lg border-l-4 border-coffee-accent scroll-animate ${delayClass} ${isVisible ? 'is-visible' : ''}`}
+      className={`bg-white p-6 rounded-lg shadow-md border-l-4 border-coffee-accent scroll-animate ${delayClass}`}
     >
-      <p className="text-coffee-medium font-inter italic text-base md:text-lg mb-6 leading-relaxed">"{testimonial.quote}"</p>
-      <p className="font-poppins font-semibold text-coffee-dark text-lg">{testimonial.author}</p>
-      <p className="text-sm text-coffee-medium">{testimonial.origin}</p>
+      <p className="text-coffee-medium font-inter italic text-sm md:text-base mb-5 leading-relaxed">"{testimonial.quote}"</p>
+      <p className="font-poppins font-semibold text-coffee-dark text-base">{testimonial.author}</p>
+      <p className="text-xs text-coffee-medium">{testimonial.origin}</p>
     </div>
   );
 };
 
 const PartnerLogo: React.FC<{ partner: Partner, index: number }> = ({ partner, index }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isVisible = useIntersectionObserver(ref, { threshold: 0.1 });
-  const delayClass = `delay-${(index % 5) * 100}`;
+  // Removed useRef, useIntersectionObserver, isVisible
+  const delayClass = `child-delay-${(index % 5) * 100}`; // Renamed to child-delay-
   
   return (
     <div 
-      ref={ref}
       title={partner.name} 
-      className={`h-12 md:h-16 w-36 md:w-40 flex items-center justify-center 
-                  rounded-lg shadow-md
-                  text-white font-semibold text-xs sm:text-sm p-2 text-center 
+      className={`h-10 md:h-14 w-32 md:w-36 flex items-center justify-center 
+                  rounded-md shadow 
+                  text-white font-semibold text-[10px] sm:text-xs p-1.5 text-center 
                   transition-all duration-300 ease-out transform hover:scale-110 
-                  scroll-animate ${delayClass} ${isVisible ? 'is-visible' : ''} 
+                  scroll-animate ${delayClass} 
                   ${partner.bgColor ? partner.bgColor : 'bg-gray-200 text-gray-700'}`}
     >
       <span>{partner.name}</span>
@@ -44,6 +39,9 @@ const PartnerLogo: React.FC<{ partner: Partner, index: number }> = ({ partner, i
 
 
 const TestimoniSection: React.FC<SectionProps> = ({ id }) => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const isSectionVisible = useIntersectionObserver(sectionRef);
+
   const testimonials: Testimonial[] = [
     {
       quote: "Kopi dari Dampit memiliki karakter yang unik dengan body yang full dan acidity yang balanced. Konsistensi kualitas mereka sangat baik untuk pasar specialty coffee kami di Tokyo.",
@@ -70,30 +68,32 @@ const TestimoniSection: React.FC<SectionProps> = ({ id }) => {
     { name: "ASEAN Coffee Connect", bgColor: "bg-indigo-600" },
   ];
   
-  const partnerTitleRef = useRef<HTMLHeadingElement>(null);
-  const isPartnerTitleVisible = useIntersectionObserver(partnerTitleRef);
+  // Removed partnerTitleRef and isPartnerTitleVisible as the h3 will use scroll-animate
 
   return (
-    <section id={id} className="py-20 md:py-28">
+    <section 
+      id={id} 
+      ref={sectionRef}
+      className={`py-16 md:py-24 ${isSectionVisible ? 'section-in-view' : ''}`}
+    >
       <div className="container mx-auto px-6 lg:px-16">
         <SectionTitle 
           title="Dipercaya Importir dari 15+ Negara"
           subtitle="Kualitas dan layanan kami telah membangun kemitraan jangka panjang di seluruh dunia."
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 md:mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 md:mb-16">
           {testimonials.map((testimonial, index) => (
             <TestimonialCard key={index} testimonial={testimonial} index={index} />
           ))}
         </div>
 
         <h3 
-          ref={partnerTitleRef}
-          className={`text-2xl md:text-3xl font-poppins font-semibold text-coffee-dark mb-10 md:mb-12 text-center scroll-animate ${isPartnerTitleVisible ? 'is-visible' : ''}`}
+          className="text-xl md:text-2xl font-poppins font-semibold text-coffee-dark mb-8 md:mb-10 text-center scroll-animate child-delay-100" // Added scroll-animate and child-delay
         >
           Beberapa Mitra Global Kami
         </h3>
-        <div className="flex flex-wrap justify-center items-center gap-x-6 sm:gap-x-8 md:gap-x-10 gap-y-6 md:gap-y-8">
+        <div className="flex flex-wrap justify-center items-center gap-x-5 sm:gap-x-6 md:gap-x-8 gap-y-5 md:gap-y-6">
           {partners.map((partner, index) => (
             <PartnerLogo key={index} partner={partner} index={index} />
           ))}

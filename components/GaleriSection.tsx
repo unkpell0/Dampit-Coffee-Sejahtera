@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import SectionTitle from './SectionTitle';
 import { SectionProps } from '../types';
@@ -16,21 +15,19 @@ interface GalleryImageProps {
 }
 
 const GalleryImage: React.FC<GalleryImageProps> = ({ image, index }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isVisible = useIntersectionObserver(ref, { threshold: 0.2 });
-  const delayClass = `delay-${(index % 3) * 100 + 100}`;
+  // Removed useRef, useIntersectionObserver, isVisible from GalleryImage
+  const delayClass = `child-delay-${(index % 3) * 100 + 100}`; // Renamed to child-delay-
 
   return (
     <div 
-      ref={ref}
-      className={`rounded-xl overflow-hidden shadow-xl transform hover:scale-105 transition-all duration-300 ease-out h-64 md:h-72 lg:h-80 scroll-animate ${delayClass} ${isVisible ? 'is-visible' : ''} ${image.bgColor ? image.bgColor : ''}`}
+      className={`rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300 ease-out h-56 md:h-64 lg:h-72 scroll-animate ${delayClass} ${image.bgColor ? image.bgColor : ''}`}
       aria-label={image.alt}
     >
       {image.src && !image.bgColor ? (
         <img src={image.src} alt={image.alt} className="w-full h-full object-cover" loading="lazy" />
       ) : (
-        <div className="w-full h-full flex items-center justify-center p-4">
-          <span className="text-white text-center text-sm sm:text-base font-medium" style={{textShadow: '0 1px 3px rgba(0,0,0,0.5)'}}>{image.alt}</span>
+        <div className="w-full h-full flex items-center justify-center p-3">
+          <span className="text-white text-center text-xs sm:text-sm font-medium" style={{textShadow: '0 1px 3px rgba(0,0,0,0.5)'}}>{image.alt}</span>
         </div>
       )}
     </div>
@@ -38,6 +35,9 @@ const GalleryImage: React.FC<GalleryImageProps> = ({ image, index }) => {
 };
 
 const GaleriSection: React.FC<SectionProps> = ({ id }) => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const isSectionVisible = useIntersectionObserver(sectionRef);
+
   const images: GalleryItemData[] = [
     { 
       alt: 'Kebun kopi hijau subur di lereng Gunung Semeru dengan pemandangan pegunungan yang menakjubkan.',
@@ -66,13 +66,17 @@ const GaleriSection: React.FC<SectionProps> = ({ id }) => {
   ];
 
   return (
-    <section id={id} className="py-20 md:py-28 bg-gray-50">
+    <section 
+      id={id} 
+      ref={sectionRef}
+      className={`py-16 md:py-24 bg-gray-50 ${isSectionVisible ? 'section-in-view' : ''}`}
+    >
       <div className="container mx-auto px-6 lg:px-16">
         <SectionTitle 
           title="Perjalanan Kopi dari Kebun ke Dunia"
           subtitle="Lihatlah lebih dekat proses kami, dari pemetikan biji pilihan hingga pengiriman global."
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {images.map((image, index) => (
             <GalleryImage key={index} image={image} index={index} />
           ))}

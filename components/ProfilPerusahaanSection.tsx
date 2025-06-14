@@ -1,28 +1,31 @@
-
 import React, { useRef } from 'react';
 import SectionTitle from './SectionTitle';
 import { SectionProps } from '../types';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const ProfilPerusahaanSection: React.FC<SectionProps> = ({ id }) => {
-  const textRef = useRef<HTMLDivElement>(null);
-  const imageContainerRef = useRef<HTMLDivElement>(null); 
-  const isTextVisible = useIntersectionObserver(textRef);
-  const isImageContainerVisible = useIntersectionObserver(imageContainerRef, { threshold: 0.3 });
+  const sectionRef = useRef<HTMLElement>(null);
+  const isSectionVisible = useIntersectionObserver(sectionRef);
 
+  // Removed individual refs and observers for textRef and imageContainerRef
+  
   const altText = "Fasilitas pengolahan kopi CV. Dampit Coffee Sejahtera yang modern dan higienis";
 
   return (
-    <section id={id} className="py-20 md:py-28">
+    <section 
+      id={id} 
+      ref={sectionRef}
+      className={`py-16 md:py-24 ${isSectionVisible ? 'section-in-view' : ''}`}
+    >
       <div className="container mx-auto px-6 lg:px-16">
         <SectionTitle 
           title="CV. Dampit Coffee Sejahtera" 
           subtitle="Mitra Terpercaya Anda untuk Kopi Ekspor Berkualitas Tinggi dari Indonesia." 
+          // SectionTitle itself has scroll-animate, will be triggered by section-in-view
         />
-        <div className="max-w-3xl mx-auto lg:text-left lg:max-w-none grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="max-w-2xl mx-auto lg:text-left lg:max-w-none grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
             <div 
-              ref={textRef}
-              className={`prose prose-lg text-coffee-medium font-inter leading-relaxed scroll-animate ${isTextVisible ? 'is-visible' : ''}`}
+              className="prose text-coffee-medium font-inter leading-relaxed scroll-animate child-delay-100" // Added child-delay
             >
               <p>
                 Didirikan pada tahun 2018, CV. Dampit Coffee Sejahtera berdedikasi menjadi eksportir kopi terkemuka dari Jawa Timur. Kami memadukan <strong className="text-coffee-dark">tradisi petani lokal</strong> dengan <strong className="text-coffee-dark">teknologi pengolahan modern</strong> untuk menghasilkan kopi berkualitas ekspor yang konsisten dan terukur.
@@ -32,14 +35,13 @@ const ProfilPerusahaanSection: React.FC<SectionProps> = ({ id }) => {
               </p>
             </div>
             <div 
-              ref={imageContainerRef}
-              className={`w-full h-80 md:h-96 lg:h-[450px] rounded-xl overflow-hidden shadow-xl 
-                          scroll-animate delay-200 ${isImageContainerVisible ? 'is-visible' : ''}
-                          bg-gradient-to-br from-purple-600 via-pink-500 to-orange-500  // Vibrant gradient
-                          flex items-center justify-center p-4`} 
+              className={`w-full h-72 md:h-80 lg:h-[400px] rounded-lg overflow-hidden shadow-lg 
+                          scroll-animate child-delay-200 // Added child-delay
+                          bg-gradient-to-br from-purple-600 via-pink-500 to-orange-500
+                          flex items-center justify-center p-3`}
             >
               <span 
-                className="text-white text-center text-lg sm:text-xl font-medium" 
+                className="text-white text-center text-base sm:text-lg font-medium"
                 style={{textShadow: '0 1px 3px rgba(0,0,0,0.6)'}}
               >
                 {altText}
